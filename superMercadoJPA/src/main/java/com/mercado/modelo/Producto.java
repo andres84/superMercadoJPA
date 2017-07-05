@@ -1,9 +1,15 @@
 package com.mercado.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -24,7 +30,15 @@ public class Producto implements Serializable {
 
     @Column(name = "observacion")
     private String observacion;
+    
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "cliente_producto", joinColumns = @JoinColumn(name = "cp_cliente"), inverseJoinColumns = @JoinColumn(name = "cp_producto"))
+    List<Cliente> cliente = new ArrayList<>();
 
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "factura_producto", joinColumns = @JoinColumn(name = "fp_factura"), inverseJoinColumns = @JoinColumn(name = "fp_producto"))
+    List<Factura> factura = new ArrayList<>();
+    
     public Producto() {
     }
 
@@ -36,6 +50,26 @@ public class Producto implements Serializable {
         this.observacion = observacion;
     }
 
+    public List<Factura> getFactura() {
+        return factura;
+    }
+
+    public void setFactura(List<Factura> factura) {
+        this.factura = factura;
+    }
+    
+    
+
+    public List<Cliente> getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(List<Cliente> cliente) {
+        this.cliente = cliente;
+    }
+
+    
+    
     public int getCod_producto() {
         return cod_producto;
     }

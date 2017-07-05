@@ -1,9 +1,16 @@
 package com.mercado.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -30,7 +37,14 @@ public class Empleado implements Serializable {
 
     @Column(name = "correo_emp")
     private String correo_emp;
-
+    
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "cliente_empleado", joinColumns = @JoinColumn(name = "ce_cliente"), inverseJoinColumns = @JoinColumn(name = "ce_empleado"))
+    List<Cliente> cliente = new ArrayList<>();
+    
+    @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
+    List<Factura> factura = new ArrayList<>();
+    
     public Empleado() {
     }
 

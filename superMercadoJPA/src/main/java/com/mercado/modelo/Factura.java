@@ -1,10 +1,16 @@
 package com.mercado.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -23,14 +29,44 @@ public class Factura implements Serializable {
     @Column(name = "observacion")
     private String observacion;
 
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "codigo_cliente")
+    private Cliente cliente;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "codigo_empleado")
+    private Empleado empleado;
+    
+    
+    @ManyToMany(mappedBy = "factura", cascade = CascadeType.ALL)
+    List<Producto> producto = new ArrayList<>();
+
     public Factura() {
     }
 
-    public Factura(int cod_factura, String tipo, Date fecha, String observacion) {
+    public Factura(int cod_factura, String tipo, Date fecha, String observacion, Cliente cliente, Empleado empleado) {
         this.cod_factura = cod_factura;
         this.tipo = tipo;
         this.fecha = fecha;
         this.observacion = observacion;
+        this.cliente = cliente;
+        this.empleado = empleado;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public int getCod_factura() {
@@ -92,7 +128,7 @@ public class Factura implements Serializable {
 
     @Override
     public String toString() {
-        return "Factura{" + "cod_factura=" + cod_factura + ", tipo=" + tipo + ", fecha=" + fecha + ", observacion=" + observacion + '}';
+        return "Factura{" + "cod_factura=" + cod_factura + ", tipo=" + tipo + ", fecha=" + fecha + ", observacion=" + observacion + ", cliente=" + cliente + ", empleado=" + empleado + '}';
     }
 
 }
