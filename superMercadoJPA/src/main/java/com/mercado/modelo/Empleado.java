@@ -45,6 +45,13 @@ public class Empleado implements Serializable {
     @OneToMany(mappedBy = "empleado", cascade = CascadeType.ALL)
     List<Factura> factura = new ArrayList<>();
     
+    public void agregarC(Cliente c){
+        
+        cliente.add(c);
+        c.getEmpleado().add(this);
+        
+    }
+    
     public Empleado() {
     }
 
@@ -58,6 +65,22 @@ public class Empleado implements Serializable {
         this.correo_emp = correo_emp;
     }
 
+    public List<Cliente> getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(List<Cliente> cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<Factura> getFactura() {
+        return factura;
+    }
+
+    public void setFactura(List<Factura> factura) {
+        this.factura = factura;
+    }
+ 
     public int getCod_empleado() {
         return cod_empleado;
     }

@@ -39,6 +39,20 @@ public class Producto implements Serializable {
     @JoinTable(name = "factura_producto", joinColumns = @JoinColumn(name = "fp_factura"), inverseJoinColumns = @JoinColumn(name = "fp_producto"))
     List<Factura> factura = new ArrayList<>();
     
+    public void agregarC(Cliente c){
+        
+        cliente.add(c);
+        c.getProducto().add(this);
+        
+    }
+    
+    public void egregarF(Factura f){
+        
+        factura.add(f);
+        f.getProducto().add(this);
+        
+    }
+    
     public Producto() {
     }
 
@@ -50,6 +64,7 @@ public class Producto implements Serializable {
         this.observacion = observacion;
     }
 
+    
     public List<Factura> getFactura() {
         return factura;
     }

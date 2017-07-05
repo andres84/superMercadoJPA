@@ -41,6 +41,20 @@ public class Cliente implements Serializable {
     
     @ManyToMany(mappedBy = "cliente")
     List<Producto> producto = new ArrayList<>();
+    
+    public void agregarE(Empleado e){
+        
+        empleado.add(e);
+        e.getCliente().add(this);
+        
+    }
+    
+    public void agregarP(Producto p){
+        
+        producto.add(p);
+        p.getCliente().add(this);
+        
+    }
 
     public Cliente() {
     }

@@ -36,10 +36,17 @@ public class Factura implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "codigo_empleado")
     private Empleado empleado;
-    
-    
+
     @ManyToMany(mappedBy = "factura", cascade = CascadeType.ALL)
     List<Producto> producto = new ArrayList<>();
+    
+    
+    public void agregarP(Producto p){
+        
+        producto.add(p);
+        p.getFactura().add(this);
+        
+    }
 
     public Factura() {
     }
@@ -51,6 +58,14 @@ public class Factura implements Serializable {
         this.observacion = observacion;
         this.cliente = cliente;
         this.empleado = empleado;
+    }
+
+    public List<Producto> getProducto() {
+        return producto;
+    }
+
+    public void setProducto(List<Producto> producto) {
+        this.producto = producto;
     }
 
     public Empleado getEmpleado() {
